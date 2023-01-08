@@ -1,5 +1,12 @@
 import { ZodObject } from 'zod';
-import { MongoCollection, MongoCreateIndexesOptions, MongoCursor, mongodb, MongoId, MongoInsertManyResult } from '../config/mongodb';
+import {
+	MongoCollection,
+	MongoCreateIndexesOptions,
+	MongoCursor,
+	mongodb,
+	MongoId,
+	MongoInsertManyResult,
+} from '../config/mongodb';
 import Result from '../utils/result';
 import BaseMongoModel from './baseMongoModel';
 
@@ -135,6 +142,25 @@ export default abstract class BaseMongoCollection<T> extends BaseMongoModel<T> {
 		this.logger.debug(filter);
 
 		const query = this.collection.find(filter).sort(param.sort);
+		return this.queryLimitAndOffset(query, param.limit, param.offset);
+	}
+
+	public async search(param: {
+		search: string;
+		sort?: {
+			[field in keyof T]: 1 | -1;
+		};
+		limit?: number;
+		offset?: number;
+	}): Promise<Result<Array<T>>> {
+		const query = this.collection.find({
+			$text: {
+				$search: param.search,
+				$caseSensitive: false,
+			},
+		});
+
+		if (param.sort) query.sort(param.sort);
 		return this.queryLimitAndOffset(query, param.limit, param.offset);
 	}
 
