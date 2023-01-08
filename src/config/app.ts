@@ -40,4 +40,6 @@ app.use((_req, _res, next) => {
 	next(Result.error('Not found', HttpStatus.NOT_FOUND));
 });
 
+app.use(errorHandler);
+
 export default app;
