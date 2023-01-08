@@ -10,6 +10,6 @@ export function initCronJobs(cronJobs: Array<CronJob>) {
 
 	for (const it of cronJobs) {
 		const job = new cron.CronJob(it.schedule, it.job, null, true, TIMEZONE);
-		// job.start();
+		job.start();
 	}
 }

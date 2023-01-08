@@ -69,9 +69,8 @@ export default abstract class BaseMongoCollection<T> extends BaseMongoModel<T> {
 				}
 			}
 
-			this.logger.debug(array);
 			const res = await this.collection.insertMany(array);
-			this.logger.debug('insertion result', res);
+			this.logger.debug('insertion result', res.insertedCount);
 			return new Result(res);
 		} catch (error) {
 			this.logger.error(error);

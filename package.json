@@ -9,9 +9,10 @@
 		"lint": "eslint --fix 'src/**/*.{js,ts}'",
 		"format": "prettier --write src/**",
 		"test": "jest --rootDir=tests",
+		"compile": "tsc --build",
 		"compile:watch": "tsc --build --watch",
-		"pre:dev": "NODE_ENV=dev nodemon --experimental-modules --es-module-specifier-resolution=node",
-		"dev": "concurrently --kill-others \"yarn pre:dev\""
+		"dev": "NODE_ENV=dev nodemon --experimental-modules --es-module-specifier-resolution=node",
+		"build:dev": "concurrently --kill-others \"yarn compile\" && NODE_ENV=dev nodemon --experimental-modules --es-module-specifier-resolution=node"
 	},
 	"engines": {
 		"node": "14"

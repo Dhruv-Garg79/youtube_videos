@@ -10,20 +10,15 @@ services:
     networks:
       - backend
   app:
-    container_name: ts-node-app
+    container_name: youtube-api
     build: 
       context: .
       dockerfile: Dockerfile
       target: base
     restart: always
-    env_file: .env
-    expose:
-      - ${PORT}
+    env_file: .env.dev
     ports:
-      - ${PORT}:${PORT}
-    environment: 
-      - MONGODB_URL=mongodb://mongo:27017/node-boilerplate
-      - CLIENT_URL=${CLIENT_URL}
+      - 3000:3000
     links: 
       - mongo  
     depends_on:
